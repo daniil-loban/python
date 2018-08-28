@@ -1,0 +1,28 @@
+# Есть 1000 бутылок вина, в одну из которых оказался добавлен сильный яд,
+# и всего 10 лабораторных мышек. 
+# Яд убивает мышку за 1 день 
+# (точность срока действия яда не позволяет отсчитывать дробное количество дней). 
+# За какое наименьшее количество дней можно с помощью этих мышей вычислить отравленную бутылку?
+
+# Ответ: за 1 день
+
+import random
+
+count = 1000
+mouses = 10
+bottles =[0 for i in range (count)]
+poison = random.randint(0,count)
+bottles[poison]=1
+print(f"отравлена бутылка:{poison}")
+plates = [0 for i in range (mouses)]
+
+for n in range(count):
+    for p in range(len(plates)):
+        # разливаем по мискам 
+        if n & 1<<p == 1<<p: plates[p]+=bottles[n]
+
+result = 0
+for idx, p in enumerate(plates):
+    if p==1: result += 1 << (idx)
+
+print(f"яд в мисках:{list(reversed(plates))} найдена: {result}")    
